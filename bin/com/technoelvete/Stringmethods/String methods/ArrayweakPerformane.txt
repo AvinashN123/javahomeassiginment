@@ -1,0 +1,13 @@
+Why are has less Performane
+
+* The size of an array is fixed. Once the memory is allocated to an array, it cannot be increased or decreased. This prevents us from   storing extra data in case we want to. These arrays of fixed size are called static arrays.
+
+* Allocating less memory than the required to an array leads to loss of data.
+
+* A single array cannot store values of different data types, i.e, an array is homogenous in nature.
+
+* The deletion and insertion operations in arrays are very difficult to implement as they store data in contiguous memory locations.
+
+* To overcome this problem, linked lists are implemented which provide random access of elements.
+ 
+* In C language, the compiler does not perform index bound checking on arrays. So, if we try to access an element using an index that  is outside the range of indexes of an array, the compiler shows a run time error, rather than an index out of bounds error.

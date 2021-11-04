@@ -1,0 +1,77 @@
+Difference between length and length()
+ 1) length-
+* An array is an object that holds a fixed number of values of same type.
+* The length variable in an array returns the length of an array i.e. is number stored in an array.
+* Once arrays are initialized,its length cannot of an changed.
+* The length variable is used only for an array.
+
+ Example -class ArryList{
+public static void main(String arges[]){
+int ar[]={1,2,3,4,5,6}
+System.out.println("length is"+ar.length);
+}
+}
+
+2) Length()-
+* The length() method is a Static method of String class.
+* The length() returns the length of a String object. the number of characters Stored in an object.
+* String class uses this method because  the length of a String can be modified using various on an object. 
+
+  Example-
+          class String{
+             public static void main(String arges[]){
+                  String str=" hi Avinash";
+                  System.out.println("Length() is"+ str.length());
+                 }
+               }
+
+
+
+  3) Multiple Inhertiance
+
+    * it refers to the subclass having more than one superclass.
+    * it cannot usingclass but using interface we can achivee.
+    *  it cannot be supported to the java-
+      because 
+      1) When one class having more than one super class that time       sub class get the ambiguity to aquire the properties of the       object class
+
+   4) Hibrid inhertiance
+     * it is the combination of more than one type of inhertiance
+      * it also gives the ambigutiy problem.
+
+
+    5)   For Each Loop
+          
+       * For each loop  is used to traverse the array or collection           in java.
+        * it makes the code readable.
+       * it eliminates the possibility of programming errors.
+  
+    Syntax
+            
+      for(data_type variable : array){
+       // body of for each loop
+       
+           }
+
+   
+      
+
+
+    
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+  

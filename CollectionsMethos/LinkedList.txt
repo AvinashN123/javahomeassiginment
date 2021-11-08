@@ -1,0 +1,36 @@
+LinkedList Methods()--
+
+* boolean	add(E e)
+
+* Appends the specified element to the end of this list.
+
+* void	add(int index, E element)
+
+* Inserts the specified element at the specified position in this list.
+
+* boolean	addAll(Collection<? extends E> c)
+
+*Appends all of the elements in the specified collection to the end of this list, in the order that they are returned by the specified collection's iterator.
+
+*boolean	addAll(int index, Collection<? extends E> c)
+
+*Inserts all of the elements in the specified collection into this list, starting at the specified position.
+
+* void	addFirst(E e)
+
+*Inserts the specified element at the beginning of this list.
+
+*void	addLast(E e)
+
+*Appends the specified element to the end of this list.
+
+*void	clear()
+
+*Removes all of the elements from this list.
+Object	clone()
+
+*Returns a shallow copy of this LinkedList.
+
+*boolean	contains(Object o)
+
+* Returns true if this list contains the specified element.

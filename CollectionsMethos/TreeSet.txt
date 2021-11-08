@@ -1,0 +1,42 @@
+TreeSet Methods()-
+
+* TreeSet()	-- It is used to construct an empty tree set that will be sorted in ascending order according to the natural order of the tree set.
+
+* TreeSet(Collection<? extends E> c)	-- It is used to build a new tree set that contains the elements of the collection c.
+
+* TreeSet(Comparator<? super E> comparator)	--It is used to construct an empty tree set that will be sorted according to given comparator.
+
+* TreeSet(SortedSet<E> s)	--It is used to build a TreeSet that contains the elements of the given SortedSet.
+
+Methods of Java TreeSet class
+Method	Description
+
+* boolean add(E e)	--It is used to add the specified element to this set if it is not already present.
+
+* boolean addAll(Collection<? extends E> c)	--It is used to add all of the elements in the specified collection to this set.
+
+*E ceiling(E e) --	It returns the equal or closest greatest element of the specified element from the set, or null there is no such element.
+
+*Comparator<? super E> comparator() --	It returns comparator that arranged elements in order.
+
+*Iterator descendingIterator() --	It is used iterate the elements in descending order.
+
+* NavigableSet descendingSet()	-- It returns the elements in reverse order.
+
+* E floor(E e) --	It returns the equal or closest least element of the specified element from the set, or null there is no such element.
+
+* SortedSet headSet(E toElement)	--It returns the group of elements that are less than the specified element.
+
+* NavigableSet headSet(E toElement, boolean inclusive)	--It returns the group of elements that are less than or equal to(if, inclusive is true) the specified element.
+
+* E higher(E e)	It returns the closest greatest element of the specified element from the set, or null there is no such element.
+
+* Iterator iterator()	--It is used to iterate the elements in ascending order.
+
+* E lower(E e)	-- It returns the closest least element of the specified element from the set, or null there is no such element.
+
+* E pollFirst() --	It is used to retrieve and remove the lowest(first) element.
+
+* E pollLast()	It is used to retrieve and remove the highest(last) element.
+
+* Spliterator spliterator()	It is used to create a late-binding and fail-fast spliterator over the elements.

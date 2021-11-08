@@ -2,8 +2,7 @@ package com.technoelevate.collectionassiginmnets;
 
 import java.util.Iterator;
 
-
-public class  MyNewArrayListTesMethod {
+public class MyNewArrayListTesMethod {
 	public static void main(String[] args) {
 		MyNewArrayList arrayList = new MyNewArrayList(3);
 		arrayList.add(1);
@@ -21,4 +20,9 @@ public class  MyNewArrayListTesMethod {
 	}
 
 }
- 
+
+
+
+
+
+

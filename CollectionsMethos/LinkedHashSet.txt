@@ -1,0 +1,9 @@
+Linked HashSet methods()--
+
+* HashSet()	--It is used to construct a default HashSet.
+
+* HashSet(Collection c)	--It is used to initialize the hash set by using the elements of the collection c.
+
+* LinkedHashSet(int capacity)	-- It is used initialize the capacity of the linked hash set to the given integer value capacity.
+
+* LinkedHashSet(int capacity, float fillRatio)	-- It is used to initialize both the capacity and the fill ratio (also called load capacity) of the hash set from its argument.

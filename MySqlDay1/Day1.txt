@@ -1,0 +1,137 @@
+ CREATE TABLE electronic_item (
+    -> elect_id int (10) primary key,
+    -> elect_name varchar(20) not null,
+    -> cost double not null,
+    -> date_of_manufacture varchar(20),
+    -> warranty int(10) not null
+    -> );
+
+    select * from electronic_item;
+   
+     Empty set (0.00 sec)
+mysql> insert into electronic_item(123,'Fan',2000,'2021-11_12',2021);
+mysql> select * from electronic_item;
++----------+------------+------+---------------------+----------+
+| elect_id | elect_name | cost | date_of_manufacture | warranty |
++----------+------------+------+---------------------+----------+
+| 123      | Fan        | 2000 | 2021-11_12          | 2021     |
++----------+------------+------+---------------------+----------+
+
+mysql> insert into electronic_item values(133,'Iron Box',500,'2020-01_06',2022);
+
+mysql> insert into electronic_item values(143,'Refrigerator',10000,'2021-05_15',2030);
+
+mysql> insert into electronic_item values(152,'Mobile',15000,'2021-06_30',2025);
+
+mysql> insert into electronic_item values(136,'laptop',65000,'2021-12_04',2033);
+
+mysql> select * from electronic_item;
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     |
+| 136      | laptop       | 65000 | 2021-12_04          | 2033     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
+| 152      | Mobile       | 15000 | 2021-06_30          | 2025     |
++----------+--------------+-------+---------------------+----------+
+
+mysql> select * from electronic_item
+    -> where elect_id=123;
++----------+------------+------+---------------------+----------+
+| elect_id | elect_name | cost | date_of_manufacture | warranty |
++----------+------------+------+---------------------+----------+
+| 123      | Fan        | 2000 | 2021-11_12          | 2021     |
++----------+------------+------+---------------------+----------+
+
+mysql> select *
+    -> from electronic_item
+    -> where elect_id in (123,133,143);
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
++----------+--------------+-------+---------------------+----------+
+
+mysql> select *
+    -> from electronic_item
+    -> where elect_name='laptop';
++----------+------------+-------+---------------------+----------+
+| elect_id | elect_name | cost  | date_of_manufacture | warranty |
++----------+------------+-------+---------------------+----------+
+| 136      | laptop     | 65000 | 2021-12_04          | 2033     |
++----------+------------+-------+---------------------+----------+
+
+mysql> select * from electronic_item
+    -> where warranty in (2030,2021,2030);
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
++----------+--------------+-------+---------------------+----------+
+
+mysql> select * from electronic_item
+    -> where date_of_manufacture='2021-12_04';4
++----------+------------+-------+---------------------+----------+
+| elect_id | elect_name | cost  | date_of_manufacture | warranty |
++----------+------------+-------+---------------------+----------+
+| 136      | laptop     | 65000 | 2021-12_04          | 2033     |
++----------+------------+-------+---------------------+----------+
+1 row in set (0.00 sec)
+
+mysql> alter  table  electronic_item
+    -> add discount int(10);
+
+mysql> select * from electronic_item;
++----------+--------------+-------+---------------------+----------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty | discount |
++----------+--------------+-------+---------------------+----------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     | NULL     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     | NULL     |
+| 136      | laptop       | 65000 | 2021-12_04          | 2033     | NULL     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     | NULL     |
+| 152      | Mobile       | 15000 | 2021-06_30          | 2025     | NULL     |
++----------+--------------+-------+---------------------+----------+----------+
+5 rows in set (0.00 sec)
+
+
+mysql> alter table electronic_item
+    -> drop column discount;
+
+mysql> select * from electronic_item;
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     |
+| 136      | laptop       | 65000 | 2021-12_04          | 2033     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
+| 152      | Mobile       | 15000 | 2021-06_30          | 2025     |
++----------+--------------+-------+---------------------+----------+
+
+mysql> select * from electronic_item
+    -> order by elect_id;
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     |
+| 136      | laptop       | 65000 | 2021-12_04          | 2033     |
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
+| 152      | Mobile       | 15000 | 2021-06_30          | 2025     |
++----------+--------------+-------+---------------------+----------+
+
+mysql> select * from electronic_item
+    -> order by elect_name desc;
++----------+--------------+-------+---------------------+----------+
+| elect_id | elect_name   | cost  | date_of_manufacture | warranty |
++----------+--------------+-------+---------------------+----------+
+| 143      | Refrigerator | 10000 | 2021-05_15          | 2030     |
+| 152      | Mobile       | 15000 | 2021-06_30          | 2025     |
+| 136      | laptop       | 65000 | 2021-12_04          | 2033     |
+| 133      | Iron Box     | 500   | 2020-01_06          | 2022     |
+| 123      | Fan          | 2000  | 2021-11_12          | 2021     |
++----------+--------------+-------+---------------------+----------+

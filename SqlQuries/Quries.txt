@@ -1,0 +1,258 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 38 to server version: 5.0.19-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use company;
+Database changed
+mysql> select * from emp;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 0      |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 0      |
+| 143 | vini  | 35000 | 501  | support        | 23  | 0      |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 0      |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 0      |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 0      |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> update  emp
+    -> set deptno=10
+    -> where id=113;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  emp
+    -> set deptno=20
+    -> where id=123
+    -> ;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  emp
+    -> set deptno=30
+    -> where id=143;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  emp
+    -> set deptno=10
+    -> where id=343;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  emp
+    -> set deptno=20
+    -> where id=363;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update  emp
+    -> set deptno=30
+    -> where id=456;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 10     |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 10     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> select name,sal from emp;
++-------+-------+
+| name  | sal   |
++-------+-------+
+| manu  | 13000 |
+| Avi   | 50000 |
+| vini  | 35000 |
+| manju | 13000 |
+| MEGHA | 30000 |
+| MADHU | 35000 |
++-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name ,deptno from emp;
++-------+--------+
+| name  | deptno |
++-------+--------+
+| manu  | 10     |
+| Avi   | 20     |
+| vini  | 30     |
+| manju | 10     |
+| MEGHA | 20     |
+| MADHU | 30     |
++-------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select job from emp;
++----------------+
+| job            |
++----------------+
+| coder          |
+| developer      |
+| support        |
+| trainee        |
+| WIFE           |
+| AIRPORT CUSTOM |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> select age,name from emp;
++-----+-------+
+| age | name  |
++-----+-------+
+| 20  | manu  |
+| 23  | Avi   |
+| 23  | vini  |
+| 21  | manju |
+| 23  | MEGHA |
+| 43  | MADHU |
++-----+-------+
+6 rows in set (0.00 sec)
+
+mysql> select job from emp;
++----------------+
+| job            |
++----------------+
+| coder          |
+| developer      |
+| support        |
+| trainee        |
+| WIFE           |
+| AIRPORT CUSTOM |
++----------------+
+6 rows in set (0.00 sec)
+
+mysql> select sal from emp;
++-------+
+| sal   |
++-------+
+| 13000 |
+| 50000 |
+| 35000 |
+| 13000 |
+| 30000 |
+| 35000 |
++-------+
+6 rows in set (0.00 sec)
+
+mysql> select sal*12 from emp;
++--------+
+| sal*12 |
++--------+
+| 156000 |
+| 600000 |
+| 420000 |
+| 156000 |
+| 360000 |
+| 420000 |
++--------+
+6 rows in set (0.00 sec)
+
+mysql> select sal*12 'Annual sal' from emp;
++------------+
+| Annual sal |
++------------+
+| 156000     |
+| 600000     |
+| 420000     |
+| 156000     |
+| 360000     |
+| 420000     |
++------------+
+6 rows in set (0.00 sec)
+
+mysql> select distinct sal from emp;
++-------+
+| sal   |
++-------+
+| 13000 |
+| 50000 |
+| 35000 |
+| 30000 |
++-------+
+4 rows in set (0.05 sec)
+
+mysql>
+mysql> select distinct deptno from emp;
++--------+
+| deptno |
++--------+
+| 10     |
+| 20     |
+| 30     |
++--------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct age from emp;
++-----+
+| age |
++-----+
+| 20  |
+| 23  |
+| 21  |
+| 43  |
++-----+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> select * from emp where deptno=10;
++-----+-------+-------+------+---------+-----+--------+
+| id  | name  | sal   | com  | job     | AGE | deptno |
++-----+-------+-------+------+---------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder   | 20  | 10     |
+| 343 | manju | 13000 | 10   | trainee | 21  | 10     |
++-----+-------+-------+------+---------+-----+--------+
+2 rows in set (0.00 sec)
+
+mysql> select name from emp where sal>1200;
++-------+
+| name  |
++-------+
+| manu  |
+| Avi   |
+| vini  |
+| manju |
+| MEGHA |
+| MADHU |
++-------+
+6 rows in set (0.00 sec)
+
+mysql> select  name from emp where age=23;
++-------+
+| name  |
++-------+
+| Avi   |
+| vini  |
+| MEGHA |
++-------+
+3 rows in set (0.00 sec)
+
+
+mysql> select sal*12 from emp where deptno=20;
++--------+
+| sal*12 |
++--------+
+| 600000 |
+| 360000 |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select name from emp where sal<=3000;
+Empty set (0.00 sec)
+
+mysql> select name,age,deptno from emp where age=21 and deptno=30;
+Empty set (0.00 sec)
+
+mysql>

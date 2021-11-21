@@ -1,0 +1,162 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 39 to server version: 5.0.19-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use company;
+Database changed
+mysql> select * from emp where name like ('%s');
+Empty set (0.00 sec)
+
+mysql> SELECT NAME max(sal) from emp where job='coder';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'max(sal) from emp where job='coder'' at line 1
+mysql> SELECT NAME ,MAX(SAL)
+    -> FROM EMP WHERE JOB='CODER';
+ERROR 1140 (42000): Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+mysql> SELECT NAME ,MAX(SAL)
+    -> FROM EMP
+    -> GROUP BY JOB;
++-------+----------+
+| NAME  | MAX(SAL) |
++-------+----------+
+| MADHU | 35000    |
+| manu  | 13000    |
+| Avi   | 50000    |
+| vini  | 35000    |
+| manju | 13000    |
+| MEGHA | 30000    |
++-------+----------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT NAME FROM EMP WHERE SAL=(SELECT MAX(COM) FROM EMP);
+Empty set (0.00 sec)
+
+mysql> SELECT NAME FROM EMP
+    -> WHERE JOB LIKE ('_O%');
++------+
+| NAME |
++------+
+| manu |
++------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> SELECT DEPTNO FROM EMP
+    -> WHERE DEPTNO=(SELECT DEPTNO FROM EMO WHERE ENAME='AVI');
+ERROR 1146 (42S02): Table 'company.emo' doesn't exist
+mysql> SELECT DEPTNO FROM EMP
+    -> WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='AVI');
+ERROR 1054 (42S22): Unknown column 'ENAME' in 'where clause'
+mysql> SELECT DEPTNO FROM EMP
+    -> WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE NAME='AVI');
++--------+
+| DEPTNO |
++--------+
+| 20     |
+| 20     |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT  * FROM EMP WHERE JOB ='CODER' AND JOB='WIFE';
+Empty set (0.00 sec)
+
+mysql>
+mysql> SELECT * FROM EMP
+    -> WHERE SAL>(SELECT SAL FROM EMP WHERE  NAME='MANU');
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+4 rows in set (0.00 sec)
+
+mysql> USE DEPT
+ERROR 1049 (42000): Unknown database 'dept'
+mysql> SELECT * FROM DEPT;
+ERROR 1146 (42S02): Table 'company.dept' doesn't exist
+mysql> SELECT * FROM DEPT;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO DEPT VALUSE('ACCOUNTING','NEW YORK',10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUSE('ACCOUNTING','NEW YORK',10)' at line 1
+mysql> INSERT INTO DEPT VALUES('ACCOUNTING','NEW YORK',10);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO DEPT VALUES('RESEARCH','DALLS',20);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> INSERT INTO DEPT VALUES('SALES','CHICAGO',30);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO DEPT VALUES('OPERATION','BOSTON',10);
+ERROR 1062 (23000): Duplicate entry '10' for key 1
+mysql> INSERT INTO DEPT VALUES('OPERATION','BOSTON',40);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> SELECT * FROM DEPT;
++------------+----------+--------+
+| DNAME      | LOC      | DEPTNO |
++------------+----------+--------+
+| ACCOUNTING | NEW YORK | 10     |
+| RESEARCH   | DALLS    | 20     |
+| SALES      | CHICAGO  | 30     |
+| OPERATION  | BOSTON   | 40     |
++------------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ENAME
+    -> FROM EMP
+    -> ;
+ERROR 1054 (42S22): Unknown column 'ENAME' in 'field list'
+mysql> SELECT * FROM EMP
+    -> WHERE AGE=23 AND COM IS NOT NULL;
++-----+-------+-------+------+-----------+-----+--------+
+| id  | name  | sal   | com  | job       | AGE | deptno |
++-----+-------+-------+------+-----------+-----+--------+
+| 123 | Avi   | 50000 | 2021 | developer | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support   | 23  | 30     |
+| 363 | MEGHA | 30000 | 100  | WIFE      | 23  | 20     |
++-----+-------+-------+------+-----------+-----+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT  DNAME FROM DEPT WHERE DEPTNO =(SELECT DEPTNO MAX(SAL) FROM EMP);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'MAX(SAL) FROM EMP)' at line 1
+mysql>
+mysql>
+mysql> SELECT DNAME FROM DEPT WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE COM IS NOT NULL);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT DNAME FROM DEPT WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE COM IS NOT NULL);
++------------+
+| DNAME      |
++------------+
+| ACCOUNTING |
+| RESEARCH   |
+| SALES      |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT ENAME FROM EMP WHERE DEPTNO=(SELECT DEPTNO FROM DEPT WHERE DNAME='RESEARCH');
+ERROR 1054 (42S22): Unknown column 'ENAME' in 'field list'
+mysql> SELECT ENAME FROM EMP WHERE DEPTNO=(SELECT DEPTNO FROM DEPT WHERE DNAME='RESEARCH');
+ERROR 1054 (42S22): Unknown column 'ENAME' in 'field list'
+mysql> SELECT NAME FROM EMP WHERE DEPTNO=(SELECT DEPTNO FROM DEPT WHERE DNAME='RESEARCH');
++-------+
+| NAME  |
++-------+
+| Avi   |
+| MEGHA |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMP WHERE DEPTNO =(SELECT DEPTNO FROM DEPT WHERE  DNAME='SLES');
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM EMP WHERE  COM=0 AND DEPTNO=(SELECT DEPTNO  FROM DEPT WHERE LOC='CHICAGO');
+Empty set (0.00 sec)
+
+mysql>

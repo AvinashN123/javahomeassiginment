@@ -1,0 +1,238 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 43 to server version: 5.0.19-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE AGE=21 AND SAL< (SELECT MIN(SAL) FROM EMP);
+ERROR 1046 (3D000): No database selected
+mysql> USE COMPANY;
+Database changed
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE AGE=21 AND SAL< (SELECT MIN(SAL) FROM EMP);
+ERROR 1054 (42S22): Unknown column 'AGE' in 'where clause'
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE AGE=21
+    -> AND SAL=(SELECT MIN(SAL) FROM EMP));
++------------+
+| DNAME      |
++------------+
+| ACCOUNTING |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AGE , JOB FROM EMP WHERE DEPTNO IN (SELECT DEPTNO FROM  DEPT WHERE
+    -> DNAME='SALES');
++-----+----------------+
+| AGE | JOB            |
++-----+----------------+
+| 23  | support        |
+| 43  | AIRPORT CUSTOM |
++-----+----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT LOC,DNAME FROM DEPT WHERE
+    -> DEPT IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER);
+    '>
+    '> ;
+    '>
+    '>
+    '> DEPT IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CODER)' at line 2
+mysql> SELECT LOC,DNAME FROM DEPT WHERE
+    -> DEPT IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER);
+    '> DEPT IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER);;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CODER)' at line 2
+ERROR:
+No query specified
+
+mysql> SELECT LOC,DNAME FROM DEPT WHERE
+    -> DEPT IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER');
+ERROR 1054 (42S22): Unknown column 'DEPT' in 'IN/ALL/ANY subquery'
+mysql> SELECT LOC,DNAME FROM DEPT WHERE
+    -> DEPTNO  IN (SELECT DEPTNO FROM EMP WHERE JOB='CODER');
++----------+------------+
+| LOC      | DNAME      |
++----------+------------+
+| NEW YORK | ACCOUNTING |
++----------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DNAME FROM DEPT WHERE DEPTNO IN
+    -> (SELECT DEPTNO FROM EMP WHERE SAL<3000 AND SAL=(SELECT MAX(SAL) FROM EMP));
+Empty set (0.00 sec)
+
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE DEPTNO  IN (SELECT  DEPTNO FROM EMP WHERE AGE=42)'
+    '> WHERE DEPTNO  IN (SELECT  DEPTNO FROM EMP WHERE AGE=42);
+    '>
+    '> ;;
+    '> SELECT DNAME FROM DEPT;
+    '> (SELECT DEPTNO FROM EMP WHERE SAL<3000 AND SAL=(SELECT MAX(SAL) FROM EMP));;
+    '>
+    '> ;
+    '> '
+    -> SELECT DNAME FROM DEPT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''
+WHERE DEPTNO  IN (SELECT  DEPTNO FROM EMP WHERE AGE=42);
+
+;;
+SELECT DNAME FROM' at line 2
+mysql>
+mysql> SELECT DNAME FROM DEPT;
++------------+
+| DNAME      |
++------------+
+| ACCOUNTING |
+| RESEARCH   |
+| SALES      |
+| OPERATION  |
++------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE DEPTNO  IN (SELECT  DEPTNO FROM EMP WHERE AGE=42);
+Empty set (0.00 sec)
+
+mysql> SELECT * FROM EMP;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 10     |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 10     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT DNAME FROM DEPT WHERE DEPTNO IN
+    -> (SELECT DEPTNO FROM EMP WHERE JOB='TRAINEE');
++------------+
+| DNAME      |
++------------+
+| ACCOUNTING |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE DEPTNO  IN ( SELECT DEPTNO FROM EMP WHERE SAL < (SELECT SAL FROM EMP WHERE
+    -> DEPTNO=10));
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> WHERE DEPTNO  IN ( SELECT DEPTNO FROM EMP WHERE SAL < (SELECT SAL FROM EMP WHERE
+    -> DEPTNO=10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE DEPTNO  IN ( SELECT DEPTNO FROM EMP WHERE SAL < (SELECT SAL FROM EMP WHERE' at line 1
+mysql>
+mysql> SELECT .* FROM DEPT
+    -> WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+    -> WHERE SAL < SELECT SAL FROM EMP WHERE DEPTNO=10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM DEPT
+WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+WHERE SAL < SELECT SAL FRO' at line 1
+mysql>
+mysql> SELECT * FROM DEPT
+    -> WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+    -> WHERE SAL < SELECT SAL FROM EMP WHERE DEPTNO=10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT SAL FROM EMP WHERE DEPTNO=10))' at line 3
+mysql> SELECT DNAME DROM DEPT WHERE DEPTNO IN
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEPT WHERE DEPTNO IN' at line 1
+mysql> SELECT DNAME DROM DEPT WHERE  DNAME LIKE ('%L%');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEPT WHERE  DNAME LIKE ('%L%')' at line 1
+mysql> SELECT DNAME FROM DEPT WHERE  DNAME LIKE ('%L%');
++-------+
+| DNAME |
++-------+
+| SALES |
++-------+
+1 row in set (0.01 sec)
+
+mysql> SELECT NAME FROM EMP  WEHRE AGE>21;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AGE>21' at line 1
+mysql> SELECT NAME FROM EMP  WEHRE  AGE > 23;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AGE > 23' at line 1
+mysql> SELECT * FROM EMP;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 10     |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 10     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMP WHERE AGE > 23;
++-------+
+| NAME  |
++-------+
+| MADHU |
++-------+
+1 row in set (0.01 sec)
+
+mysql> SELECT LOC FROM DEPT WHERE DEPTNO IN(SELECT DEPTNO FROM EMP WHERE SAL> (
+    -> SELECT SAL FROM EMP WHERE SAL> 2000));
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> SELECT DNAME FROM  DEPT WHERE DNAME  LIKE ('%EE%');
+Empty set (0.00 sec)
+
+mysql> SELECT NAME , SAL FROM EMP WHERE SAL > (SELECT SAL FROM EMP WHERE NAME='VINI'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> SELECT NAME , SAL FROM EMP WHERE SAL > (SELECT SAL FROM EMP WHERE NAME='VINI');
++------+-------+
+| NAME | SAL   |
++------+-------+
+| Avi  | 50000 |
++------+-------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM DEPT
+    -> WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+    -> SELECT * FROM DEPT ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM DEPT' at line 3
+mysql> SELECT * FROM EMP
+    -> WHERE DEPTNO IN (SELECT DEPTNO FROM DEPT
+    -> WHERE LOC='CHICAGO');
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT NAME FROM EMP  WHERE SAL =( SELECT MIN(SAL)  FROM EMP );
++-------+
+| NAME  |
++-------+
+| manu  |
+| manju |
++-------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT DNAME FROM DEPT  WHERE  DEPTNO IN
+    -> (SELECT DEPTNO FROM EMP WHERE JOB='SUPPORT');
++-------+
+| DNAME |
++-------+
+| SALES |
++-------+
+1 row in set (0.01 sec)
+
+mysql> SELECT DNAME FROM DEPT
+    -> WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+    -> GROUP BY NAME);
++------------+
+| DNAME      |
++------------+
+| ACCOUNTING |
+| RESEARCH   |
+| SALES      |
++------------+
+3 rows in set (0.00 sec)
+
+mysql>

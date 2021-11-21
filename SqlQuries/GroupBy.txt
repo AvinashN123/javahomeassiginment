@@ -1,0 +1,185 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 44 to server version: 5.0.19-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use company;
+Database changed
+mysql> select total(sal),sal from emp;
+ERROR 1305 (42000): FUNCTION company.total does not exist
+mysql> select sum(sal),sal from emp;
+ERROR 1140 (42000): Mixing of GROUP columns (MIN(),MAX(),COUNT(),...) with no GROUP columns is illegal if there is no GROUP BY clause
+mysql> select sum(sal) sal from emp group by sal;
++-------+
+| sal   |
++-------+
+| 26000 |
+| 30000 |
+| 70000 |
+| 50000 |
++-------+
+4 rows in set, 1 warning (0.00 sec)
+
+mysql> select sum(sal), sal from emp group by sal;
++----------+-------+
+| sum(sal) | sal   |
++----------+-------+
+| 26000    | 13000 |
+| 30000    | 30000 |
+| 70000    | 35000 |
+| 50000    | 50000 |
++----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select age from emp group by age;
++-----+
+| age |
++-----+
+| 20  |
+| 21  |
+| 23  |
+| 43  |
++-----+
+4 rows in set (0.00 sec)
+
+mysql> select name ,sal from emp;
++-------+-------+
+| name  | sal   |
++-------+-------+
+| manu  | 13000 |
+| Avi   | 50000 |
+| vini  | 35000 |
+| manju | 13000 |
+| MEGHA | 30000 |
+| MADHU | 35000 |
++-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name from emp froup by sal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by sal' at line 1
+mysql> select name from emp group by sal;
++-------+
+| name  |
++-------+
+| manu  |
+| MEGHA |
+| vini  |
+| Avi   |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp wherejob='trainee'
+    -> gruop by job;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='trainee'
+gruop by job' at line 1
+mysql> select * from emp where job='trainee'
+    -> group by job;
++-----+-------+-------+------+---------+-----+--------+
+| id  | name  | sal   | com  | job     | AGE | deptno |
++-----+-------+-------+------+---------+-----+--------+
+| 343 | manju | 13000 | 10   | trainee | 21  | 10     |
++-----+-------+-------+------+---------+-----+--------+
+1 row in set (0.00 sec)
+
+mysql> select deptno,avg(sal) from emp group by sal
+    -> having sal in(25000 and 35000);
+Empty set (0.00 sec)
+
+mysql>
+mysql> select id from emp where com is not null
+    -> ;
++-----+
+| id  |
++-----+
+| 113 |
+| 123 |
+| 143 |
+| 343 |
+| 363 |
+| 456 |
++-----+
+6 rows in set (0.00 sec)
+
+mysql> select name from emp where name like('%AEIOU%');
+Empty set (0.00 sec)
+
+mysql> select name from emp  where age =23
+    -> group by deptno;
++------+
+| name |
++------+
+| Avi  |
+| vini |
++------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select max(sal) from emp where name like ('v%')
+    -> group by job;
++----------+
+| max(sal) |
++----------+
+| 35000    |
++----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select name, distinct sal,distinct deptno from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct sal,distinct deptno from emp' at line 1
+mysql>
+mysql> select distinct sal from emp;
++-------+
+| sal   |
++-------+
+| 13000 |
+| 50000 |
+| 35000 |
+| 30000 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select name,distinct sal from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct sal from emp' at line 1
+mysql> select name from emp where name in (select distinct sal from emp);
+Empty set (0.00 sec)
+
+mysql> select name from emp where sal in (select distinct sal from emp);
++-------+
+| name  |
++-------+
+| manu  |
+| Avi   |
+| vini  |
+| manju |
+| MEGHA |
+| MADHU |
++-------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> select name from emp age =23
+    -> group by  deptno ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=23
+group by  deptno' at line 1
+mysql> select name from emp
+    -> where age=23
+    -> group by deptno;
++------+
+| name |
++------+
+| Avi  |
+| vini |
++------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> select max(sal) from emp where name='Avi';
++----------+
+| max(sal) |
++----------+
+| 50000    |
++----------+
+1 row in set (0.00 sec)
+
+mysql>

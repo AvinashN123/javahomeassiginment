@@ -1,0 +1,225 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 42 to server version: 5.0.19-nt
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use company;
+Database changed
+mysql> select dname , loc from dept where dept=(select deptno from emp where job='coder');
+ERROR 1054 (42S22): Unknown column 'dept' in 'where clause'
+mysql> select dname , loc from dept where deptno=(select deptno from emp where job='coder');
++------------+----------+
+| dname      | loc      |
++------------+----------+
+| ACCOUNTING | NEW YORK |
++------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select dname,loc from dept where deptno in(select deptno,sal from emp where job='wife' and name='avi');
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select dname,loc from dept where deptno in(select deptno,sal from emp where job='wife');
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select dname,loc from dept where deptno =(select deptno,sal from emp where job='wife');
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select dname,loc from dept where deptno =(select deptno from emp where job='wife');
++----------+-------+
+| dname    | loc   |
++----------+-------+
+| RESEARCH | DALLS |
++----------+-------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select name,sal*12 from emp where deptno in(20,30)
+    -> group by name;
++-------+--------+
+| name  | sal*12 |
++-------+--------+
+| Avi   | 600000 |
+| MADHU | 420000 |
+| MEGHA | 360000 |
+| vini  | 420000 |
++-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select loc from dept where dept=(select deptno from emp where age=23);
+ERROR 1054 (42S22): Unknown column 'dept' in 'where clause'
+mysql> select loc from dept where deptno=(select deptno from emp where age=23);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select loc from dept where deptno in (select deptno from emp where age=23);
++---------+
+| loc     |
++---------+
+| DALLS   |
+| CHICAGO |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select name from emp where job=(select job from emp where name='avi' and
+    -> sal<(select sal from emp where name='vini'));
+Empty set (0.00 sec)
+
+mysql> select * from emp where sal<(select sal from emp where job='coder');
+Empty set (0.00 sec)
+
+mysql> select name from emp where age<=23;
++-------+
+| name  |
++-------+
+| manu  |
+| Avi   |
+| vini  |
+| manju |
+| MEGHA |
++-------+
+5 rows in set (0.00 sec)
+
+mysql> select* from emp;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 10     |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 10     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> select name from emp
+    -> where sal<(select sal from emp
+    -> where sal<(select max(sal) from emp);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> select name from emp
+    -> where sal<(select sal from emp
+    -> where sal<(select max(sal) from emp));
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select name from emp
+    -> ;
++-------+
+| name  |
++-------+
+| manu  |
+| Avi   |
+| vini  |
+| manju |
+| MEGHA |
+| MADHU |
++-------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> select name  from emp
+    -> where sal<(select max(sal) from emp where sal<(select max(sal) from emp));
++-------+
+| name  |
++-------+
+| manu  |
+| manju |
+| MEGHA |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-----+-------+-------+------+----------------+-----+--------+
+| id  | name  | sal   | com  | job            | AGE | deptno |
++-----+-------+-------+------+----------------+-----+--------+
+| 113 | manu  | 13000 | 201  | coder          | 20  | 10     |
+| 123 | Avi   | 50000 | 2021 | developer      | 23  | 20     |
+| 143 | vini  | 35000 | 501  | support        | 23  | 30     |
+| 343 | manju | 13000 | 10   | trainee        | 21  | 10     |
+| 363 | MEGHA | 30000 | 100  | WIFE           | 23  | 20     |
+| 456 | MADHU | 35000 | 1000 | AIRPORT CUSTOM | 43  | 30     |
++-----+-------+-------+------+----------------+-----+--------+
+6 rows in set (0.00 sec)
+
+mysql> select sal from emp
+    -> where sal>(select sal from emp where name='manju');
++-------+
+| sal   |
++-------+
+| 50000 |
+| 35000 |
+| 30000 |
+| 35000 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> select name, sal from emp
+    -> where sal>(select sal from emp where name='manju');
++-------+-------+
+| name  | sal   |
++-------+-------+
+| Avi   | 50000 |
+| vini  | 35000 |
+| MEGHA | 30000 |
+| MADHU | 35000 |
++-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select name from emp where deptno in(select
+    -> deptno from dept where loc='new york');
++-------+
+| name  |
++-------+
+| manu  |
+| manju |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select loc from dept where deptno in (select  deptno  from name like ('_A%') and
+    ->  sal between 20000 and 40000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like ('_A%') and
+ sal between 20000 and 40000)' at line 1
+mysql> select loc from dept where deptno in (select  deptno  from name like ('_A%') );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like ('_A%') )' at line 1
+mysql> select loc from dept where deptno in (select  deptno  from emp name like ('_A%')  and
+    -> sal between 30000 and 40000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'like ('_A%')  and
+sal between 30000 and 40000)' at line 1
+mysql> select loc from dept where deptno = (select  deptno  from emp  where name like ('_A%') );
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select loc from dept where deptno in (select  deptno  from emp  where name like ('_A%')
+    -> and sal between 30000 and 40000);
++---------+
+| loc     |
++---------+
+| CHICAGO |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select dname from dept  where deptno in( Select deptno from
+    -> emp where age=23);
++----------+
+| dname    |
++----------+
+| RESEARCH |
+| SALES    |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> select depno from dept
+    -> where deptno in (select deptno from emp
+    -> where job='coder' and age=23);
+ERROR 1054 (42S22): Unknown column 'depno' in 'field list'
+mysql> select deptno from dept
+    -> where deptno in (select deptno from emp
+    -> where job='coder' and age=23);
+Empty set (0.00 sec)
+
+mysql> select dname from dept where deptno=(select deptno from emp
+    -> where sal>(select sal from emp   where job='coder'
+    -> having avg(sal)>1));
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select * ,sal*12 from emp
+    -> where com=(select max(com) from emp);
++-----+------+-------+------+-----------+-----+--------+--------+
+| id  | name | sal   | com  | job       | AGE | deptno | sal*12 |
++-----+------+-------+------+-----------+-----+--------+--------+
+| 123 | Avi  | 50000 | 2021 | developer | 23  | 20     | 600000 |
++-----+------+-------+------+-----------+-----+--------+--------+
+1 row in set (0.00 sec)
+
+mysql>
